@@ -53,8 +53,6 @@ process MINIMAL_RUN_VEP {
         --assembly GRCh38 \
         --offline \
         --cache \
-        --dir_cache "${params.cache}" \
-        --fasta "${params.fasta}" \
         --force_overwrite \
         --af_gnomad \
         --symbol --protein --biotype \
