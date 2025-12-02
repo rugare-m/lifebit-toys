@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-params.bam ?: exit 1, "ERROR: Please provide --bam <file.bam>"
+params.bam
 
 process index_bam {
     tag "$bam"
