@@ -15,7 +15,7 @@ process RUN_VEP {
         --assembly GRCh38 \
         --offline \
         --cache \
-        --dir_cache "${params.cache}" \
+        --dir_cache /.vep \
         --fasta "${params.fasta}" \
         --force_overwrite \
         --af_gnomad \
@@ -31,7 +31,7 @@ process RUN_VEP {
         --plugin TSSDistance \
         --plugin dbscSNV,"${params.dbscSNV}" \
         --plugin AlphaMissense,file="${params.alpha}",cols=all \
-        --fork 92 
+        --fork 12 
     """
 }
 
@@ -58,6 +58,6 @@ process MINIMAL_RUN_VEP {
         --af_gnomad \
         --symbol --protein --biotype \
         --max_af \
-        --fork 92 
+        --fork 12
     """
 }

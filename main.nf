@@ -18,6 +18,7 @@ params.alpha           = null
 
 // Import the process from the module file
 include { MINIMAL_RUN_VEP } from './modules/vep.nf'
+include { RUN_VEP } from './modules/vep.nf'
 
 
 workflow {
@@ -26,5 +27,5 @@ workflow {
         .fromPath("${params.vcf_dir}/*.{vcf,vcf.gz}")
         .set { vcf_files }
 
-    RUN_VEP(vcf_files)
+    MINIMAL_RUN_VEP(vcf_files)
 }
