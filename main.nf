@@ -27,5 +27,6 @@ workflow {
         .fromPath("${params.vcf_dir}/*.{vcf,vcf.gz}")
         .set { vcf_files }
 
-    MINIMAL_RUN_VEP(vcf_files)
+    MINIMAL_RUN_VEP(vcf_files) when params.minimal
+    RUN_VEP(vcf_files) when params.full
 }
