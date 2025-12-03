@@ -4,7 +4,6 @@ params.vcf_dir        = null
 params.cache          = null
 params.fasta          = null
 
-
 params.clinvar        = null
 params.cadd_snv        = null
 params.cadd_indels     = null
@@ -14,15 +13,12 @@ params.revel           = null
 params.splice_vault    = null
 params.dbscSNV         = null
 params.alpha           = null
+
 params.minimal = true
-params.full = false
+params.full    = false
 
-
-
-// Import the process from the module file
 include { MINIMAL_RUN_VEP } from './modules/vep.nf'
-include { RUN_VEP } from './modules/vep.nf'
-
+include { RUN_VEP }        from './modules/vep.nf'
 
 workflow {
 
@@ -30,6 +26,15 @@ workflow {
         .fromPath("${params.vcf_dir}/*.{vcf,vcf.gz}")
         .set { vcf_files }
 
-    MINIMAL_RUN_VEP(vcf_files) when params.minimal
-    RUN_VEP(vcf_files) when params.full
+    // optional sanity check
+    if( params.minimal && params.full )
+        exit 1, "ERROR: --minimal and --full cannot both be true"
+
+    if( params.minimal ) {
+        MINIMAL_RUN_VEP(vcf_files)
+    }
+
+    if( params.full ) {
+        RUN_VEP(vcf_files)
+    }
 }
