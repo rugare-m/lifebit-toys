@@ -39,6 +39,8 @@ process RUN_VEP {
 process MINIMAL_RUN_VEP {
     tag "${vcf_file.simpleName}"
 
+    cpus 64
+
     input:
     path vcf_file
 
@@ -58,6 +60,6 @@ process MINIMAL_RUN_VEP {
         --af_gnomad \
         --symbol --protein --biotype \
         --max_af \
-        --fork 12
+        --fork "${task.cpus}"
     """
 }
