@@ -14,6 +14,9 @@ params.revel           = null
 params.splice_vault    = null
 params.dbscSNV         = null
 params.alpha           = null
+params.minimal = true
+params.full = false
+
 
 
 // Import the process from the module file
