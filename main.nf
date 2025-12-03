@@ -13,6 +13,7 @@ params.revel           = null
 params.splice_vault    = null
 params.dbscSNV         = null
 params.alpha           = null
+params.hp              = null
 
 params.minimal = true
 params.full    = false
