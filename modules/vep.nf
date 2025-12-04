@@ -52,17 +52,6 @@ process MINIMAL_RUN_VEP {
 
     script:
     """
-    vep \
-        -i "${vcf_file}" \
-        -o "${vcf_file.simpleName}.annotated.txt" \
-        --assembly GRCh38 \
-        --offline \
-        --cache \
-        --dir_cache /.vep \
-        --force_overwrite \
-        --af_gnomad \
-        --symbol --protein --biotype \
-        --max_af \
-        --fork "${params.hp}"
+    vep -i "${vcf_file}" -o "${vcf_file.simpleName}.annotated.txt" --assembly GRCh38 --offline --cache --dir_cache /.vep --force_overwrite --fork "${params.hp}" --safe
     """
 }
