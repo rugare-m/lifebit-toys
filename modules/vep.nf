@@ -45,10 +45,8 @@ process MINIMAL_RUN_VEP {
     output:
     path "${vcf_file.simpleName}.annotated.txt"
 
-
-    cpus 100
-    memory 100.GB
-
+    cpus 50
+    memory 50.GB
 
     script:
     """
