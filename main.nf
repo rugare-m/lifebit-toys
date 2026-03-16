@@ -19,7 +19,7 @@ params.minimal = true
 params.full    = false
 
 include { MINIMAL_RUN_VEP } from './modules/vep.nf'
-include { RUN_VEP }        from './modules/vep.nf'
+include { VEP }        from './modules/vep.nf'
 
 workflow {
 
@@ -36,6 +36,6 @@ workflow {
     }
 
     if( params.full ) {
-        RUN_VEP(vcf_files)
+        VEP(vcf_files)
     }
 }
