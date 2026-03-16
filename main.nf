@@ -36,6 +36,25 @@ workflow {
     }
 
     if( params.full ) {
-        VEP(vcf_files)
+        workflow {
+
+    //vcf_ch = Channel.fromPath(params.vcf)
+
+    fasta = file(params.fasta)
+    fasta_index = file("${params.fasta}.fai")
+
+    VEP(
+        vcf_files,
+        fasta,
+        fasta_index,
+        file(params.clinvar),
+        file(params.cadd_snv),
+        file(params.cadd_indels),
+        file(params.spliceai_snv),
+        file(params.spliceai_indels),
+        file(params.revel),
+        file(params.alpha)
+    )
+}
     }
 }

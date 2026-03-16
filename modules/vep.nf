@@ -1,19 +1,24 @@
 process VEP {
     tag "${vcf_file.simpleName}"
 
+    cpus 10
+    memory 10.GB
+
     input:
     path vcf_file
-    tuple (fasta)
-    tuple (clinvar)
-    tuple (cadd_snv)
-    tuple (cadd_indels)
+    path fasta
+    path fasta_index
+    path clinvar
+    path cadd_snv
+    path cadd_indels
+    path spliceai_snv
+    path spliceai_indels
+    path revel
+    path alpha
 
     output:
     path "${vcf_file.simpleName}.annotated.txt"
 
-    cpus 50
-    memory 50.GB
-    
     script:
     """
     vep \
@@ -23,20 +28,20 @@ process VEP {
         --offline \
         --cache \
         --dir_cache /.vep \
-        --fasta "${params.fasta}" \
+        --fasta "${fasta}" \
         --force_overwrite \
         --af_gnomad \
         --max_af \
         --hgvs \
         --protein --biotype --symbol \
-        --custom "${params.clinvar},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
-        --plugin CADD,"${params.cadd_snv}","${params.cadd_indels}" \
-        --plugin SpliceAI,snv="${params.spliceai_snv}",indel="${params.spliceai_indels}" \
-        --plugin REVEL,"${params.revel}" \
+        --custom "${clinvar},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
+        --plugin CADD,"${cadd_snv}","${cadd_indels}" \
+        --plugin SpliceAI,snv="${spliceai_snv}",indel="${spliceai_indels}" \
+        --plugin REVEL,"${revel}" \
         --plugin SpliceRegion \
         --plugin TSSDistance \
-        --plugin AlphaMissense,file="${params.alpha}",cols=all \
-        --fork 12 
+        --plugin AlphaMissense,file="${alpha}",cols=all \
+        --fork 12
     """
 }
 
@@ -91,8 +96,8 @@ process MINIMAL_RUN_VEP {
     output:
     path "${vcf_file.simpleName}.annotated.txt"
 
-    cpus 50
-    memory 50.GB
+    cpus 10
+    memory 10.GB
 
     script:
     """
