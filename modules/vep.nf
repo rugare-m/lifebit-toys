@@ -1,8 +1,8 @@
 process VEP {
     tag "${vcf_file.simpleName}"
 
-    cpus 12
-    memory 10.GB
+    cpus 64
+    memory 64.GB
 
     input:
     path vcf_file
@@ -40,7 +40,7 @@ process VEP {
         --dir_cache /.vep \
         --fasta "${fasta}" \
         --force_overwrite \
-        --everything \
+        --everything --hgvsg \
         --custom "${clinvar},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
         --plugin CADD,"${cadd_snv}","${cadd_indels}" \
         --plugin SpliceAI,snv="${spliceai_snv}",indel="${spliceai_indels}" \
@@ -48,7 +48,7 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork 8
+        --fork 48
     """
 }
 
