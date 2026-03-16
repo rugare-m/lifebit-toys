@@ -13,7 +13,7 @@ params.revel           = null
 params.splice_vault    = null
 params.dbscSNV         = null
 params.alpha           = null
-params.hp              = 4
+params.hp              = 8
 
 params.minimal = true
 params.full    = false
@@ -55,7 +55,7 @@ workflow {
 
             file(params.revel),
 
-            file(params.alpha)
+            file(params.alpha),
             file("${params.alpha}.tbi")
         )
     }

@@ -12,7 +12,7 @@ process VEP {
     path clinvar_tbi
     path cadd_snv
     path cadd_indels
-    
+
     path spliceai_snv
     path spliceai_indels
 
@@ -42,7 +42,7 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork ${task.cpus}
+        --fork 8
     """
 }
 
