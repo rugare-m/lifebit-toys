@@ -1,7 +1,7 @@
 process VEP {
     tag "${vcf_file.simpleName}"
 
-    cpus 10
+    cpus 12
     memory 10.GB
 
     input:
@@ -9,12 +9,16 @@ process VEP {
     path fasta
     path fasta_index
     path clinvar
+    path clinvar_tbi
     path cadd_snv
     path cadd_indels
+    
     path spliceai_snv
     path spliceai_indels
+
     path revel
     path alpha
+    path alpha_tbi
 
     output:
     path "${vcf_file.simpleName}.annotated.txt"
@@ -30,10 +34,7 @@ process VEP {
         --dir_cache /.vep \
         --fasta "${fasta}" \
         --force_overwrite \
-        --af_gnomad \
-        --max_af \
-        --hgvs \
-        --protein --biotype --symbol \
+        --everything \
         --custom "${clinvar},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
         --plugin CADD,"${cadd_snv}","${cadd_indels}" \
         --plugin SpliceAI,snv="${spliceai_snv}",indel="${spliceai_indels}" \
@@ -41,10 +42,9 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork 12
+        --fork ${task.cpus}
     """
 }
-
 
 
 
