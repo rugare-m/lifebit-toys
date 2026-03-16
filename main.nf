@@ -15,7 +15,7 @@ params.dbscSNV         = null
 params.alpha           = null
 params.hp              = 8
 
-params.minimal = true
+params.minimal = false
 params.full    = false
 
 include { MINIMAL_RUN_VEP } from './modules/vep.nf'

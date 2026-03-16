@@ -8,15 +8,21 @@ process VEP {
     path vcf_file
     path fasta
     path fasta_index
+
     path clinvar
     path clinvar_tbi
+
     path cadd_snv
+    path cadd_snv_tbi
+
     path cadd_indels
+    path cadd_indels_tbi
 
     path spliceai_snv
     path spliceai_indels
 
     path revel
+    
     path alpha
     path alpha_tbi
 
