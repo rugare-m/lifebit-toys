@@ -3,6 +3,10 @@ process VEP {
 
     input:
     path vcf_file
+    tuple (fasta)
+    tuple (clinvar)
+    tuple (cadd_snv)
+    tuple (cadd_indels)
 
     output:
     path "${vcf_file.simpleName}.annotated.txt"
