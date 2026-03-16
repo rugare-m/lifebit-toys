@@ -36,9 +36,6 @@ workflow {
     }
 
     if( params.full ) {
-        workflow {
-
-    //vcf_ch = Channel.fromPath(params.vcf)
 
     fasta = file(params.fasta)
     fasta_index = file("${params.fasta}.fai")
@@ -56,5 +53,4 @@ workflow {
         file(params.alpha)
     )
 }
-    }
 }
