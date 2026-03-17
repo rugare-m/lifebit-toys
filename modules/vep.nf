@@ -1,5 +1,5 @@
 process VEP {
-    publishDir "results/vep", mode: 'move'
+    publishDir "results/vep", mode: 'move' , pattern: "*.annotated.txt"
 
     tag "${vcf_file.simpleName}"
 
@@ -50,7 +50,7 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork 48
+        --fork 12
     """
 }
 
