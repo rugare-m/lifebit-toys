@@ -1,4 +1,6 @@
 process VEP {
+    publishDir "results/vep", mode: 'copy'
+
     tag "${vcf_file.simpleName}"
 
     cpus 64
