@@ -1,5 +1,5 @@
 process VEP {
-    publishDir "results/vep", mode: 'copy'
+    publishDir "results/vep", mode: 'move'
 
     tag "${vcf_file.simpleName}"
 
