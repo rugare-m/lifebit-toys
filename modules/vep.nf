@@ -4,7 +4,7 @@ process VEP {
     tag "${vcf_file.simpleName}"
 
     cpus 16
-    memory 92.GB
+    memory 96.GB
 
     input:
     path vcf_file
@@ -28,41 +28,12 @@ process VEP {
     mkdir -p plugins
     cp ${plugin_files} plugins/
 
-    # Force exact filenames for files that require sibling indexes
-    cp "${spliceai_snv}"      spliceai_snv.vcf.gz
-    cp "${spliceai_snv_tbi}"  spliceai_snv.vcf.gz.tbi
-
-    cp "${spliceai_indels}"      spliceai_indels.vcf.gz
-    cp "${spliceai_indels_tbi}"  spliceai_indels.vcf.gz.tbi
-
-    cp "${clinvar}"      clinvar.vcf.gz
-    cp "${clinvar_tbi}"  clinvar.vcf.gz.tbi
-
-    cp "${cadd_snv}"      cadd_snv.tsv.gz
-    cp "${cadd_snv_tbi}"  cadd_snv.tsv.gz.tbi
-
-    cp "${cadd_indels}"      cadd_indels.tsv.gz
-    cp "${cadd_indels_tbi}"  cadd_indels.tsv.gz.tbi
-
-    cp "${revel}"      revel.tsv.gz
-    cp "${revel_tbi}"  revel.tsv.gz.tbi
-
-    cp "${alpha}"      alpha.tsv.gz
-    cp "${alpha_tbi}"  alpha.tsv.gz.tbi
-
-    echo "==== plugins ===="
-    ls -l plugins
-
-    echo "==== spliceai files ===="
-    ls -l spliceai_snv.vcf.gz*
-    ls -l spliceai_indels.vcf.gz*
-
-    echo "==== other indexed files ===="
-    ls -l clinvar.vcf.gz*
-    ls -l cadd_snv.tsv.gz*
-    ls -l cadd_indels.tsv.gz*
-    ls -l revel.tsv.gz*
-    ls -l alpha.tsv.gz*
+    echo "=== staged files ==="
+    ls -lh
+    echo "=== spliceai ==="
+    ls -lh "${spliceai_snv}"* "${spliceai_indels}"*
+    echo "=== cadd ==="
+    ls -lh "${cadd_snv}"* "${cadd_indels}"*
 
     vep \
         --dir_plugins plugins \
@@ -76,14 +47,14 @@ process VEP {
         --force_overwrite \
         --everything \
         --hgvsg \
-        --custom "clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
-        --plugin CADD,"cadd_snv.tsv.gz","cadd_indels.tsv.gz" \
-        --plugin SpliceAI,snv="spliceai_snv.vcf.gz",indel="spliceai_indels.vcf.gz" \
-        --plugin REVEL,"revel.tsv.gz" \
+        --custom "${clinvar},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
+        --plugin CADD,"${cadd_snv}","${cadd_indels}" \
+        --plugin SpliceAI,snv="${spliceai_snv}",indel="${spliceai_indels}" \
+        --plugin REVEL,"${revel}" \
         --plugin SpliceRegion \
         --plugin TSSDistance \
-        --plugin AlphaMissense,file="alpha.tsv.gz",cols=all \
-        --fork 12 \
+        --plugin AlphaMissense,file="${alpha}",cols=all \
+        --fork 8 \
         --safe
     """
 }
