@@ -63,7 +63,7 @@ workflow {
             file("${params.revel}.tbi"),
 
             file(params.alpha),
-            file("${params.alpha}.tbi")
+            file("${params.alpha}.tbi"),
 
             plugin_files
         )
