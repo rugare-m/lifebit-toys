@@ -32,16 +32,20 @@ process VEP {
     path alpha
     path alpha_tbi
 
+    path plugin_files
+
     output:
     path "${vcf_file.simpleName}.annotated.txt"
 
     script:
     """
-    echo "Checking plugins directory:"
-    ls -l /plugins
+    mkdir -p plugins
+    cp ${plugin_files} plugins/
+
+    ls -l plugins
 
     vep \
-        --dir_plugins /plugins \
+        --dir_plugins plugins \
         -i "${vcf_file}" \
         -o "${vcf_file.simpleName}.annotated.txt" \
         --assembly GRCh38 \
@@ -50,7 +54,8 @@ process VEP {
         --dir_cache /.vep \
         --fasta "${fasta}" \
         --force_overwrite \
-        --everything --hgvsg \
+        --everything \
+        --hgvsg \
         --custom "${clinvar},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT" \
         --plugin CADD,"${cadd_snv}","${cadd_indels}" \
         --plugin SpliceAI,snv="${spliceai_snv}",indel="${spliceai_indels}" \
@@ -58,7 +63,8 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork 12 --safe
+        --fork 12 \
+        --safe
     """
 }
 

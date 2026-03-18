@@ -22,6 +22,10 @@ include { MINIMAL_RUN_VEP } from './modules/vep.nf'
 include { VEP }             from './modules/vep.nf'
 
 workflow {
+    Channel
+    .fromPath("$projectDir/pm/*.pm")
+    .collect()
+    .set { plugin_files }
 
     Channel
         .fromPath("${params.vcf_dir}/*.{vcf,vcf.gz}")
@@ -60,6 +64,8 @@ workflow {
 
             file(params.alpha),
             file("${params.alpha}.tbi")
+
+            plugin_files
         )
     }
 }
