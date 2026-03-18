@@ -50,7 +50,7 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork 4
+        --fork 4 --safe
     """
 }
 
