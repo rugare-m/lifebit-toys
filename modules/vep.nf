@@ -3,8 +3,8 @@ process VEP {
 
     tag "${vcf_file.simpleName}"
 
-    cpus 64
-    memory 64.GB
+    cpus 16
+    memory 92.GB
 
     input:
     path vcf_file
