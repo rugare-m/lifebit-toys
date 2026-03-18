@@ -13,6 +13,18 @@ params.revel           = null
 params.splice_vault    = null
 params.dbscSNV         = null
 params.alpha           = null
+
+
+params.spliceai_snv_tbi    = null
+params.spliceai_indels_tbi = null
+params.clinvar_tbi         = null
+params.cadd_snv_tbi        = null
+params.cadd_indels_tbi     = null
+params.revel_tbi           = null
+params.alpha_tbi           = null
+params.fasta_fai           = null
+
+
 params.hp              = 8
 
 params.minimal = false
@@ -79,17 +91,19 @@ workflow {
     }
 
     if (params.full) {
-        VEP(
-            vcf_files,
-            fasta_tuple,
-            clinvar_tuple,
-            cadd_snv_tuple,
-            cadd_indels_tuple,
-            spliceai_snv_tuple,
-            spliceai_indels_tuple,
-            revel_tuple,
-            alpha_tuple,
-            plugin_files
-        )
-    }
+    VEP(
+        vcf_files,
+
+        tuple(file(params.fasta),            file(params.fasta_fai)),
+        tuple(file(params.clinvar),          file(params.clinvar_tbi)),
+        tuple(file(params.cadd_snv),         file(params.cadd_snv_tbi)),
+        tuple(file(params.cadd_indels),      file(params.cadd_indels_tbi)),
+        tuple(file(params.spliceai_snv),     file(params.spliceai_snv_tbi)),
+        tuple(file(params.spliceai_indels),  file(params.spliceai_indels_tbi)),
+        tuple(file(params.revel),            file(params.revel_tbi)),
+        tuple(file(params.alpha),            file(params.alpha_tbi)),
+
+        plugin_files
+    )
+}
 }
