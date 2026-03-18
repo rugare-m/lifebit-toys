@@ -3,8 +3,8 @@ process VEP {
 
     tag "${vcf_file.simpleName}"
 
-    cpus 36
-    memory 36.GB
+    cpus 64
+    memory 64.GB
 
     input:
     path vcf_file
@@ -58,7 +58,7 @@ process VEP {
         --plugin SpliceRegion \
         --plugin TSSDistance \
         --plugin AlphaMissense,file="${alpha}",cols=all \
-        --fork 4 --safe
+        --fork 12 --safe
     """
 }
 
