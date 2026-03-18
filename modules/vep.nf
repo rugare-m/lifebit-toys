@@ -1,5 +1,5 @@
 process VEP {
-    publishDir "results/vep", mode: 'move' , pattern: "*.annotated.txt"
+    publishDir "results/vep", mode: 'move', pattern: "*.annotated.txt"
 
     tag "${vcf_file.simpleName}"
 
@@ -8,29 +8,15 @@ process VEP {
 
     input:
     path vcf_file
-    path fasta
-    path fasta_index
 
-    path clinvar
-    path clinvar_tbi
-
-    path cadd_snv
-    path cadd_snv_tbi
-
-    path cadd_indels
-    path cadd_indels_tbi
-
-    path spliceai_snv
-    path spliceai_snv_tbi
-
-    path spliceai_indels
-    path spliceai_indels_tbi
-
-    path revel
-    path revel_tbi
-    
-    path alpha
-    path alpha_tbi
+    tuple path(fasta),            path(fasta_index)
+    tuple path(clinvar),          path(clinvar_tbi)
+    tuple path(cadd_snv),         path(cadd_snv_tbi)
+    tuple path(cadd_indels),      path(cadd_indels_tbi)
+    tuple path(spliceai_snv),     path(spliceai_snv_tbi)
+    tuple path(spliceai_indels),  path(spliceai_indels_tbi)
+    tuple path(revel),            path(revel_tbi)
+    tuple path(alpha),            path(alpha_tbi)
 
     path plugin_files
 

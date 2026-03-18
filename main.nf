@@ -23,13 +23,53 @@ include { VEP }             from './modules/vep.nf'
 
 workflow {
     Channel
-    .fromPath("$projectDir/pm/*.pm")
-    .collect()
-    .set { plugin_files }
+        .fromPath("$projectDir/pm/*.pm")
+        .collect()
+        .set { plugin_files }
 
     Channel
         .fromPath("${params.vcf_dir}/*.{vcf,vcf.gz}")
         .set { vcf_files }
+
+    def fasta_tuple = tuple(
+        file(params.fasta),
+        file("${params.fasta}.fai")
+    )
+
+    def clinvar_tuple = tuple(
+        file(params.clinvar),
+        file("${params.clinvar}.tbi")
+    )
+
+    def cadd_snv_tuple = tuple(
+        file(params.cadd_snv),
+        file("${params.cadd_snv}.tbi")
+    )
+
+    def cadd_indels_tuple = tuple(
+        file(params.cadd_indels),
+        file("${params.cadd_indels}.tbi")
+    )
+
+    def spliceai_snv_tuple = tuple(
+        file(params.spliceai_snv),
+        file("${params.spliceai_snv}.tbi")
+    )
+
+    def spliceai_indels_tuple = tuple(
+        file(params.spliceai_indels),
+        file("${params.spliceai_indels}.tbi")
+    )
+
+    def revel_tuple = tuple(
+        file(params.revel),
+        file("${params.revel}.tbi")
+    )
+
+    def alpha_tuple = tuple(
+        file(params.alpha),
+        file("${params.alpha}.tbi")
+    )
 
     if (params.minimal && params.full)
         exit 1, "ERROR: --minimal and --full cannot both be true"
@@ -41,30 +81,14 @@ workflow {
     if (params.full) {
         VEP(
             vcf_files,
-            file(params.fasta),
-            file("${params.fasta}.fai"),
-
-            file(params.clinvar),
-            file("${params.clinvar}.tbi"),
-
-            file(params.cadd_snv),
-            file ("${params.cadd_snv}.tbi"),
-
-            file(params.cadd_indels),
-            file("${params.cadd_indels}.tbi"),
-
-            file(params.spliceai_snv),
-            file("${params.spliceai_snv}.tbi"),
-
-            file(params.spliceai_indels),
-            file("${params.spliceai_indels}.tbi"),
-
-            file(params.revel),
-            file("${params.revel}.tbi"),
-
-            file(params.alpha),
-            file("${params.alpha}.tbi"),
-
+            fasta_tuple,
+            clinvar_tuple,
+            cadd_snv_tuple,
+            cadd_indels_tuple,
+            spliceai_snv_tuple,
+            spliceai_indels_tuple,
+            revel_tuple,
+            alpha_tuple,
             plugin_files
         )
     }
