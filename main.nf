@@ -50,10 +50,13 @@ workflow {
             file("${params.cadd_indels}.tbi"),
 
             file(params.spliceai_snv),
-            file(params.spliceai_indels),
+            file("${params.spliceai_snv}.tbi"),
 
+            file(params.spliceai_indels),
+            file("${params.spliceai_indels}.tbi"),
 
             file(params.revel),
+            file("${params.revel}.tbi"),
 
             file(params.alpha),
             file("${params.alpha}.tbi")

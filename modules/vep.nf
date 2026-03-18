@@ -21,9 +21,13 @@ process VEP {
     path cadd_indels_tbi
 
     path spliceai_snv
+    path spliceai_snv_tbi
+
     path spliceai_indels
+    path spliceai_indels_tbi
 
     path revel
+    path revel_tbi
     
     path alpha
     path alpha_tbi
@@ -33,7 +37,11 @@ process VEP {
 
     script:
     """
+    echo "Checking plugins directory:"
+    ls -l /plugins
+
     vep \
+        --dir_plugins /plugins \
         -i "${vcf_file}" \
         -o "${vcf_file.simpleName}.annotated.txt" \
         --assembly GRCh38 \
