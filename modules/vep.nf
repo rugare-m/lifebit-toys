@@ -1,5 +1,5 @@
 process VEP {
-    publishDir "results/vep", mode: 'move', pattern: "*.annotated.txt"
+    publishDir "results/vep", mode: 'copy', pattern: "*.annotated.txt"
 
     tag "${vcf_file.simpleName}"
 
