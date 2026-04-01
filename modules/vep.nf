@@ -8,7 +8,7 @@ process VEP {
 
     input:
     path vcf_file
-
+    path cache_dir
     tuple path(fasta),            path(fasta_index)
     tuple path(clinvar),          path(clinvar_tbi)
     tuple path(cadd_snv),         path(cadd_snv_tbi)
@@ -42,7 +42,7 @@ process VEP {
         --assembly GRCh38 \
         --offline \
         --cache \
-        --dir_cache /.vep \
+        --dir_cache "${cache_dir}" \
         --fasta "${fasta}" \
         --force_overwrite \
         --everything \

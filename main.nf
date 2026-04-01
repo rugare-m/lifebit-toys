@@ -53,7 +53,7 @@ workflow {
     if (params.full) {
     VEP(
         vcf_files,
-
+        file(params.cache),
         tuple(file(params.fasta),            file(params.fasta_fai)),
         tuple(file(params.clinvar),          file(params.clinvar_tbi)),
         tuple(file(params.cadd_snv),         file(params.cadd_snv_tbi)),
